@@ -1,0 +1,5 @@
+https://realpython.com/python-send-email/#option-2-setting-up-a-local-smtp-server
+
+Run this in shell to display any received emails:
+
+$ python -m smtpd -c DebuggingServer -n localhost:41399
