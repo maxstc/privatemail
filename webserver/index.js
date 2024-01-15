@@ -3,8 +3,9 @@ const app = express();
 const db = require("../fakedb.json");
 const fs = require("fs");
 
-const authRouter = require("./routers/auth.js");
+app.use(express.json());
 
+const authRouter = require("./routers/auth.js");
 app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
