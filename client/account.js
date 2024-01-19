@@ -1,5 +1,24 @@
 function signIn() {
-    alert("Signin");
+    fetch("auth/signin", {
+        method: "POST",
+        body: JSON.stringify({
+            address: document.getElementById("signin-address").value,
+            password: document.getElementById("signin-password").value
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        if (json == true) {
+            document.cookie = "auth=" + document.getElementById("signin-address").value + "," + document.getElementById("signin-password").value + "; expires=" + oneYearExpireTime() + "; path=/;"
+            alert("Signin successful");
+        }
+        else {
+            alert("Signin failed - Check your address and password!");
+        }
+    });
 }
 
 function signUp() {
@@ -15,14 +34,33 @@ function createAccount() {
     fetch("auth/signup", {
         method: "POST",
         body: JSON.stringify({
-            address: document.getElementById("signup-address"),
-            password: document.getElementById("signup-password")
-        })
+            address: document.getElementById("signup-address").value,
+            password: document.getElementById("signup-password").value
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
     })
     .then((response) => response.json())
-    .then((json) => alert(json));
+    .then((json) => {
+        if (json == true) {
+            document.cookie = "auth=" + document.getElementById("signup-address").value + "," + document.getElementById("signup-password").value + "; expires=" + oneYearExpireTime() + "; path=/;"
+            alert("Signup successful");
+        }
+        else {
+            alert("Signup failed - Check your address and password!");
+        }
+    });
 }
 
 function signOut() {
     document.cookie = "auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+function oneYearExpireTime() {
+    let date = new Date();
+    let time = date.getTime();
+    time += 36000000;
+    date.setTime(time);
+    return date.toUTCString();
 }

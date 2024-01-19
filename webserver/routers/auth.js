@@ -1,60 +1,51 @@
 const express = require("express");
 const router = express.Router();
-
-const ADD_USER_ADDRESS_TAKEN = 0;
-const ADD_USER_SUCCESS = 1;
-const AUTH_SUCCESS = 2;
-const AUTH_FAILURE = 3;
+const db = require("../fakedb.json");
+const fs = require("fs");
 
 router.post("/signup", (req, res) => {
-    let result = addUser(req.body.address, req.body.password);
-    if (result === ADD_USER_ADDRESS_TAKEN) {
+    //IMPORTANT: this doesnt check that the given address is valid and it may not work
+    if (req.body.address.length < 1 || req.body.password.length < 1 || req.body.address == undefined || req.body.password == undefined) {
         res.json(false);
-    }
-    else if (result === ADD_USER_SUCCESS) {
-        res.json(true);
     }
     else {
-        res.json(false);
+        let result = addUser(req.body.address, req.body.password);
+        if (result === ADD_USER_ADDRESS_TAKEN) {
+            res.json(false);
+        }
+        else if (result === ADD_USER_SUCCESS) {
+            res.json(true);
+        }
+        else {
+            res.json(false);
+        }
     }
 });
 
 router.post("/signin", (req, res) => {
     let result = authUser(req.body.address, req.body.password);
-    if (result === AUTH_SUCCESS) {
-        res.json(true);
-    }
-    else if (result === AUTH_FAILURE) {
-        res.json(false);
-    }
-    else {
-        res.json(false);
-    }
+    res.json(result);
 });
 
 function authUser(address, password) {
-    if (db[address] == password) {
-        return AUTH_SUCCESS;
-    }
-    else {
-        return AUTH_FAILURE;
-    }
+    return db[address] == password;
 }
 
 function addUser(address, password) {
-    if (db[address] == undefined) {
+    if (db[address] === undefined) {
         db[address] = password;
         saveDB();
-        return ADD_USER_SUCCESS;
+        return true;
     }
     else {
-        return ADD_USER_ADDRESS_TAKEN;
+        return false;
     }
 }
 
 function saveDB() {
     let json = JSON.stringify(db);
-    fs.write("../fakedb.json", json, "utf8");
+    console.log(json);
+    fs.writeFileSync("./fakedb.json", json);
 }
 
 module.exports = router;

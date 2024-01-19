@@ -1,7 +1,5 @@
 const express = require("express");
 const app = express();
-const db = require("./fakedb.json");
-const fs = require("fs");
 
 app.use(express.json());
 app.use(express.static("../client"));
