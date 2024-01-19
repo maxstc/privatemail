@@ -10,15 +10,7 @@ router.post("/signup", (req, res) => {
     }
     else {
         let result = addUser(req.body.address, req.body.password);
-        if (result === ADD_USER_ADDRESS_TAKEN) {
-            res.json(false);
-        }
-        else if (result === ADD_USER_SUCCESS) {
-            res.json(true);
-        }
-        else {
-            res.json(false);
-        }
+        res.json(result);
     }
 });
 
