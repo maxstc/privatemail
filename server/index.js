@@ -22,6 +22,8 @@ console.log("SMTP Mail server running on port 3001");
 
 function handleMail(text) {
     let parsedMail = parseMail(text);
+    console.log(parsedMail);
+    //if (db["alias"][parsedMail.])
     //subject, from, to, and text
 }
 
@@ -39,11 +41,12 @@ function parseMail(text) {
         }
         else {
             let colonIndex = split[i].indexOf(":");
-            output[split[i].substring(0, colonIndex)] = split[i].substring(colonIndex + 1).trim();
+            output[split[i].substring(0, colonIndex).toLowerCase()] = split[i].substring(colonIndex + 1).trim();
         }
     }
     output.text = output.text.substring(0, output.text.length - 1);
-    console.log(output);
+    output.parsedTo = output.to.substring(0, output.to.indexOf("@"));
+    return output;
 }
 
 const express = require("express");
