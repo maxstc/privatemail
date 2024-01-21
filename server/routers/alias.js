@@ -12,6 +12,7 @@ router.post("/add", (req, res) => {
             if (db["alias"][address] === undefined) {
                 done = true;
                 db["alias"][address] = req.body.address();
+                db["aliasLists"][req.body.address].push[{"alias": address, "nickname": ""}]
             }
         }
     }

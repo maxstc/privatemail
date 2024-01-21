@@ -13,6 +13,7 @@ function addUser(address, password) {
         db["alias"][address] = address;
         db["alias"]["test"] = address; //DELETE THIS LATER!!!
         db["mail"][address] = [];
+        db["aliasLists"][address] = [];
         return true;
     }
     else {

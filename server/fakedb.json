@@ -1,5 +1,6 @@
 {
     "auth":{},
     "mail":{},
-    "alias":{}
+    "alias":{},
+    "aliasLists":{}
 }
