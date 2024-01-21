@@ -8,7 +8,7 @@ const server = new SMTPServer({
     }
 });
 server.listen(3001);
-console.log("SMTP Mail server running on port 3002");
+console.log("SMTP Mail server running on port 3001");
 
 const express = require("express");
 const app = express();
