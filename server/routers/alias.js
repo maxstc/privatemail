@@ -21,6 +21,15 @@ router.post("/add", (req, res) => {
     }
 });
 
+router.post("/rename", (req, res) => {
+    if (authUser(req.body.address, req.body.password)) {
+        db["aliasLists"][req.body.address][req.body.aliasIndex].nickname = req.body.nickname;
+    }
+    else {
+        res.json(false);
+    }
+});
+
 const randomAddressLength = 32;
 const randomAddressValidCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
