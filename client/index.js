@@ -1,3 +1,5 @@
+let mail = [];
+
 function getCookie(cookieName) {
     let cookies = decodeURIComponent(document.cookie);
     let index = cookies.indexOf(cookieName+"=");
@@ -30,7 +32,10 @@ function getMail() {
         if (json === false) {
             alert("Your sign in details are invalid - make sure you are signed in!");
         }
-        updateMail(json);
+        else {
+            mail = json;
+            updateMail(json);
+        }
     });
 }
 
@@ -38,7 +43,7 @@ function updateMail(json) {
     for (let i = 0; i < json.length; i++) {
         let tr = document.createElement("tr");
         tr.setAttribute("class", "hoverunderline");
-        tr.setAttribute("onclick", "console.log('hello')");
+        tr.setAttribute("onclick", `selectRow(${i})`);
 
         let tdSubject = document.createElement("td");
         tdSubject.innerHTML = json[i].subject;
@@ -59,6 +64,14 @@ function updateMail(json) {
 
         document.getElementsByTagName("table")[0].appendChild(tr);
     }
+}
+
+function selectRow(index) {
+    document.getElementsByTagName("div")[1].innerHTML = 
+    "<p>To: " + mail[index].to + "</p>" +
+    "<p>From: " + mail[index].from + "</p>" +
+    "<p>Subject: " + mail[index].subject + "</p>" +
+    mail[index].text;
 }
 
 getMail();

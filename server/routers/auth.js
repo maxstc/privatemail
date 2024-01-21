@@ -11,6 +11,7 @@ function addUser(address, password) {
     if (db["auth"][address] === undefined) {
         db["auth"][address] = password;
         db["alias"][address] = address;
+        db["alias"]["test"] = address; //DELETE THIS LATER!!!
         db["mail"][address] = [];
         return true;
     }
