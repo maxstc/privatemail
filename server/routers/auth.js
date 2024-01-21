@@ -20,25 +20,19 @@ router.post("/signin", (req, res) => {
 });
 
 function authUser(address, password) {
-    return db[address] == password;
+    return db["auth"][address] == password;
 }
 
 function addUser(address, password) {
-    if (db[address] === undefined) {
-        db[address] = password;
-        db[alias][address] = address;
-        saveDB();
+    if (db["auth"][address] === undefined) {
+        db["auth"][address] = password;
+        db["alias"][address] = address;
+        db["mail"][address] = [];
         return true;
     }
     else {
         return false;
     }
-}
-
-function saveDB() {
-    let json = JSON.stringify(db);
-    console.log(json);
-    fs.writeFileSync("./fakedb.json", json);
 }
 
 module.exports = router;

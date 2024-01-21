@@ -1,4 +1,5 @@
 const stream = require("stream");
+const db = require("./fakedb.json");
 
 const SMTPServer = require("smtp-server").SMTPServer;
 const server = new SMTPServer({
@@ -22,8 +23,14 @@ console.log("SMTP Mail server running on port 3001");
 
 function handleMail(text) {
     let parsedMail = parseMail(text);
-    console.log(parsedMail);
-    //if (db["alias"][parsedMail.])
+    if (db["alias"][parsedMail.parsedTo] === undefined) {
+        console.log("Mail bounced!");
+        console.log(parsedMail);
+    }
+    else {
+        db["mail"][db["alias"][parsedMail.parsedTo]].push(parsedMail);
+        console.log(db);
+    }
     //subject, from, to, and text
 }
 
@@ -66,3 +73,21 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3000, () => console.log("Web server runnning on port 3000"));
+
+function doExit() {
+    console.log(db);
+    process.exit();
+}
+
+// // do something when app is closing
+// process.on('exit', () => {doExit()});
+
+// // catches ctrl+c event
+// process.on('SIGINT', () => {doExit()});
+
+// // catches "kill pid" (for example: nodemon restart)
+// process.on('SIGUSR1', () => {doExit()});
+// process.on('SIGUSR2', () => {doExit()});
+
+// // catches uncaught exceptions
+// process.on('uncaughtException', () => {doExit()});

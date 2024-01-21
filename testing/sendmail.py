@@ -15,7 +15,7 @@ with open("textfile.txt") as fp:
 # you == the recipient's email address
 msg['Subject'] = "Hello there"
 msg['From'] = "max@mail.com"
-msg['To'] = "xam@mail.com"
+msg['To'] = "test@mail.com"
 
 # Send the message via our own SMTP server.
 s = smtplib.SMTP(host='localhost', port=3001)
