@@ -18,6 +18,6 @@ msg['From'] = "max@mail.com"
 msg['To'] = "xam@mail.com"
 
 # Send the message via our own SMTP server.
-s = smtplib.SMTP(host='localhost', port=41399)
+s = smtplib.SMTP(host='localhost', port=3001)
 s.send_message(msg)
 s.quit()
