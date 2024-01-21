@@ -26,6 +26,7 @@ function authUser(address, password) {
 function addUser(address, password) {
     if (db[address] === undefined) {
         db[address] = password;
+        db[alias][address] = address;
         saveDB();
         return true;
     }

@@ -19,6 +19,9 @@ app.use(express.static("../client"));
 const authRouter = require("./routers/auth.js");
 app.use("/auth", authRouter);
 
+const mailRouter = require("./routers/mail.js");
+app.use("/mail", mailRouter);
+
 app.get("/", (req, res) => {
     res.redirect("index.html");
 });
