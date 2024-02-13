@@ -25,8 +25,9 @@ router.post("/add", (req, res) => {
             let address = generateAddress();
             if (db["alias"][address] === undefined) {
                 done = true;
-                db["alias"][address] = req.body.address();
+                db["alias"][address] = req.body.address;
                 db["aliasLists"][req.body.address][address] = "";
+                res.json(db["aliasLists"][req.body.address]);
             }
         }
     }
@@ -37,7 +38,8 @@ router.post("/add", (req, res) => {
 
 router.post("/rename", (req, res) => {
     if (authUser(req.body.address, req.body.password)) {
-        db["aliasLists"][req.body.address][req.body.aliasAddress].nickname = "" + req.body.nickname;
+        db["aliasLists"][req.body.address][req.body.aliasAddress] = "" + req.body.nickname;
+        res.json(db["aliasLists"][req.body.address]);
     }
     else {
         res.json(false);

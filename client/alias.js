@@ -24,6 +24,7 @@ function getAliases() {
 }
 
 function updateAliases() {
+    document.getElementsByTagName("table")[0].innerHTML = "<th>Address</th>\n<th>Nickname</th>\n<th>Change Nickname</th>";
     for (let i = 0; i < Object.keys(aliases).length; i++) {
         let tr = document.createElement("tr");
 
@@ -31,7 +32,7 @@ function updateAliases() {
         tdAddress.innerHTML = Object.keys(aliases)[i];
 
         let tdNickname = document.createElement("td");
-        tdNickname.innerHTML = aliases[Object.keys(aliases)];
+        tdNickname.innerHTML = aliases[Object.keys(aliases)[i]];
 
         let tdChangeNickname = document.createElement("td");
         let inputChangeNickname = document.createElement("input");
@@ -54,7 +55,51 @@ function updateAliases() {
 }
 
 function setAlias(address) {
+    fetch("alias/rename", {
+        method: "POST",
+        body: JSON.stringify({
+            address: getCookie("auth").split(",")[0],
+            password: getCookie("auth").split(",")[1],
+            aliasAddress: address,
+            nickname: document.getElementById("alias" + address).value
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        if (json === false) {
+            alert("Your sign in details are invalid - make sure you are signed in!");
+        }
+        else {
+            aliases = json;
+            updateAliases();
+        }
+    });
+}
 
+function createNewAlias() {
+    fetch("alias/add", {
+        method: "POST",
+        body: JSON.stringify({
+            address: getCookie("auth").split(",")[0],
+            password: getCookie("auth").split(",")[1]
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        if (json === false) {
+            alert("Your sign in details are invalid - make sure you are signed in!");
+        }
+        else {
+            aliases = json;
+            updateAliases();
+        }
+    });
 }
 
 getAliases();
