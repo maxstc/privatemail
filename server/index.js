@@ -29,7 +29,6 @@ function handleMail(text) {
     }
     else {
         db["mail"][db["alias"][parsedMail.parsedTo]].push(parsedMail);
-        console.log(db);
     }
     //subject, from, to, and text
 }
@@ -56,6 +55,11 @@ function parseMail(text) {
     return output;
 }
 
+const https = require("https");
+const privateKey  = fs.readFileSync("server.key", "utf8");
+const certificate = fs.readFileSync("server.crt", "utf8");
+const credentials = {key: privateKey, cert: certificate};
+
 const express = require("express");
 const app = express();
 
@@ -75,12 +79,8 @@ app.get("/", (req, res) => {
     res.redirect("index.html");
 });
 
-app.listen(3000, () => console.log("Web server runnning on port 3000"));
-
-function doExit() {
-    console.log(db);
-    process.exit();
-}
+const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(3000);
 
 // // do something when app is closing
 // process.on('exit', () => {doExit()});
