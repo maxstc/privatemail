@@ -13,6 +13,7 @@ function getMail() {
     .then((json) => {
         if (json === false) {
             alert("Your sign in details are invalid - make sure you are signed in!");
+            window.location = "account.html";
         }
         else {
             mail = json;

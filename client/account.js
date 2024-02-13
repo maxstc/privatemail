@@ -17,6 +17,7 @@ function signIn() {
         }
         else {
             alert("Signin failed - Check your address and password!");
+            window.location = "account.html";
         }
     });
 }
@@ -49,6 +50,7 @@ function createAccount() {
         }
         else {
             alert("Signup failed - Check your address and password!");
+            window.location = "account.html";
         }
     });
 }
