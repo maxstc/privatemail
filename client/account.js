@@ -14,6 +14,7 @@ function signIn() {
         if (json == true) {
             document.cookie = "auth=" + document.getElementById("signin-address").value + "," + document.getElementById("signin-password").value + "; expires=" + oneYearExpireTime() + "; path=/;"
             alert("Signin successful");
+            window.location = "index.html";
         }
         else {
             alert("Signin failed - Check your address and password!");
@@ -47,6 +48,7 @@ function createAccount() {
         if (json == true) {
             document.cookie = "auth=" + document.getElementById("signup-address").value + "," + document.getElementById("signup-password").value + "; expires=" + oneYearExpireTime() + "; path=/;"
             alert("Signup successful");
+            window.location = "index.html";
         }
         else {
             alert("Signup failed - Check your address and password!");

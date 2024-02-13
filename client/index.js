@@ -1,3 +1,5 @@
+document.getElementById("signedinas").innerHTML = "Signed in as " + getCookie("auth").split(",")[0];
+
 function getMail() {
     fetch("mail/inbox", {
         method: "POST",
