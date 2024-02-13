@@ -1,0 +1,60 @@
+let aliases = [];
+
+function getAliases() {
+    fetch("alias/get", {
+        method: "POST",
+        body: JSON.stringify({
+            address: getCookie("auth").split(",")[0],
+            password: getCookie("auth").split(",")[1]
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        if (json === false) {
+            alert("Your sign in details are invalid - make sure you are signed in!");
+        }
+        else {
+            aliases = json;
+            updateAliases();
+        }
+    });
+}
+
+function updateAliases() {
+    for (let i = 0; i < Object.keys(aliases).length; i++) {
+        let tr = document.createElement("tr");
+
+        let tdAddress = document.createElement("td");
+        tdAddress.innerHTML = Object.keys(aliases)[i];
+
+        let tdNickname = document.createElement("td");
+        tdNickname.innerHTML = aliases[Object.keys(aliases)];
+
+        let tdChangeNickname = document.createElement("td");
+        let inputChangeNickname = document.createElement("input");
+        inputChangeNickname.setAttribute("id", "alias" + Object.keys(aliases)[i]);
+        tdChangeNickname.appendChild(inputChangeNickname);
+
+        let tdButtonChangeNickname = document.createElement("td");
+        let buttonChangeNickname = document.createElement("button");
+        buttonChangeNickname.innerHTML = "Submit";
+        buttonChangeNickname.onclick = () => {setAlias(Object.keys(aliases)[i])};
+        tdButtonChangeNickname.appendChild(buttonChangeNickname);
+
+        tr.appendChild(tdAddress);
+        tr.appendChild(tdNickname);
+        tr.appendChild(tdChangeNickname);
+        tr.appendChild(tdButtonChangeNickname);
+
+        document.getElementsByTagName("table")[0].appendChild(tr);
+    }
+}
+
+function setAlias(address) {
+
+}
+
+getAliases();

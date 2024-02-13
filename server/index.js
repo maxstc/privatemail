@@ -68,6 +68,9 @@ app.use("/auth", authRouter);
 const mailRouter = require("./routers/mail.js");
 app.use("/mail", mailRouter);
 
+const aliasRouter = require("./routers/alias.js");
+app.use("/alias", aliasRouter);
+
 app.get("/", (req, res) => {
     res.redirect("index.html");
 });

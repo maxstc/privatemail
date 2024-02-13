@@ -4,6 +4,20 @@ const db = require("../fakedb.json");
 const fs = require("fs");
 const auth = require("./auth.js");
 
+function authUser(address, password) {
+    return db["auth"][address] === password;
+}
+
+router.post("/get", (req, res) => {
+    console.log(db["aliasLists"]);
+    if (authUser(req.body.address, req.body.password)) {
+        res.json(db["aliasLists"][req.body.address]);
+    }
+    else {
+        res.json(false);
+    }
+});
+
 router.post("/add", (req, res) => {
     if (authUser(req.body.address, req.body.password)) {
         let done = false;
@@ -12,7 +26,7 @@ router.post("/add", (req, res) => {
             if (db["alias"][address] === undefined) {
                 done = true;
                 db["alias"][address] = req.body.address();
-                db["aliasLists"][req.body.address].push[{"alias": address, "nickname": ""}]
+                db["aliasLists"][req.body.address][address] = "";
             }
         }
     }
@@ -23,7 +37,7 @@ router.post("/add", (req, res) => {
 
 router.post("/rename", (req, res) => {
     if (authUser(req.body.address, req.body.password)) {
-        db["aliasLists"][req.body.address][req.body.aliasIndex].nickname = req.body.nickname;
+        db["aliasLists"][req.body.address][req.body.aliasAddress].nickname = "" + req.body.nickname;
     }
     else {
         res.json(false);

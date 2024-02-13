@@ -1,21 +1,3 @@
-let mail = [];
-
-function getCookie(cookieName) {
-    let cookies = decodeURIComponent(document.cookie);
-    let index = cookies.indexOf(cookieName+"=");
-    if (index == -1) {
-        return undefined;
-    }
-    startIndex = index + cookieName.length + 1;
-    endIndex = cookies.indexOf(";", startIndex);
-    if (endIndex == -1) {
-        endIndex = cookies.length;
-    }
-    return cookies.substring(startIndex, endIndex);
-}
-
-console.log(getCookie("auth"));
-
 function getMail() {
     fetch("mail/inbox", {
         method: "POST",
@@ -34,25 +16,25 @@ function getMail() {
         }
         else {
             mail = json;
-            updateMail(json);
+            updateMail();
         }
     });
 }
 
-function updateMail(json) {
-    for (let i = 0; i < json.length; i++) {
+function updateMail() {
+    for (let i = 0; i < mail.length; i++) {
         let tr = document.createElement("tr");
         tr.setAttribute("class", "hoverunderline");
         tr.setAttribute("onclick", `selectRow(${i})`);
 
         let tdSubject = document.createElement("td");
-        tdSubject.innerHTML = json[i].subject;
+        tdSubject.innerHTML = mail[i].subject;
 
         let tdFrom = document.createElement("td");
-        tdFrom.innerHTML = json[i].from;
+        tdFrom.innerHTML = mail[i].from;
 
         let tdTo = document.createElement("td");
-        tdTo.innerHTML = json[i].parsedTo;
+        tdTo.innerHTML = mail[i].parsedTo;
 
         let tdDate = document.createElement("td");
         tdDate.innerHTML = "NYI";
