@@ -55,6 +55,7 @@ function parseMail(text) {
     return output;
 }
 
+const fs = require("fs");
 const https = require("https");
 const privateKey  = fs.readFileSync("server.key", "utf8");
 const certificate = fs.readFileSync("server.crt", "utf8");
@@ -81,6 +82,7 @@ app.get("/", (req, res) => {
 
 const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(3000);
+console.log("HTTPS server running on port 3000")
 
 // // do something when app is closing
 // process.on('exit', () => {doExit()});
