@@ -1,0 +1,4 @@
+Run playit.gg and set the port to SMTP over TLS
+Run mail server on SMTP over TLS port
+Send email to <address>@<playitsubdomain>
+Done
