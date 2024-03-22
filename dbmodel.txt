@@ -1,3 +1,0 @@
-auth: user login details
-mail: user emails
-alias: alias translations

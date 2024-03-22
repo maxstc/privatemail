@@ -1,3 +1,6 @@
+const SMTP_PORT = 3001;
+const WEB_PORT = 3000;
+
 const stream = require("stream");
 const db = require("./fakedb.json");
 
@@ -35,8 +38,8 @@ const server = new SMTPServer({
         stream.on("end", callback);
     }
 });
-server.listen(3001);
-console.log("SMTP Mail server running on port 3001");
+server.listen(SMTP_PORT);
+console.log("SMTP Mail server running on port " + SMTP_PORT);
 
 function handleMail(text) {
     // console.log(text.to.text);
@@ -52,7 +55,7 @@ function handleMail(text) {
         console.log(text);
     }
     else {
-        db["mail"][db["alias"][parsedToLocalPart]].push(text);
+        db["mail"][db["alias"][parsedToLocalPart]].unshift(text);
     }
 }
 
@@ -106,18 +109,5 @@ app.get("/", (req, res) => {
 });
 
 const httpsServer = https.createServer(credentials, app);
-httpsServer.listen(3000);
-console.log("HTTPS server running on port 3000")
-
-// // do something when app is closing
-// process.on('exit', () => {doExit()});
-
-// // catches ctrl+c event
-// process.on('SIGINT', () => {doExit()});
-
-// // catches "kill pid" (for example: nodemon restart)
-// process.on('SIGUSR1', () => {doExit()});
-// process.on('SIGUSR2', () => {doExit()});
-
-// // catches uncaught exceptions
-// process.on('uncaughtException', () => {doExit()});
+httpsServer.listen(WEB_PORT);
+console.log("HTTPS server running on port " + WEB_PORT);
