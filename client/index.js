@@ -1,6 +1,12 @@
-document.getElementById("signedinas").innerHTML = "Signed in as " + getCookie("auth").split(",")[0];
+if (getCookie("auth") === undefined) {
+    redirectToAccount();
+}
+else {
+    document.getElementById("signedinas").innerHTML = "Signed in as " + getCookie("auth").split(",")[0];
+}
 
 function getMail() {
+
     fetch("mail/inbox", {
         method: "POST",
         body: JSON.stringify({
@@ -14,14 +20,19 @@ function getMail() {
     .then((response) => response.json())
     .then((json) => {
         if (json === false) {
-            alert("Your sign in details are invalid - make sure you are signed in!");
-            window.location = "account.html";
+            redirectToAccount();
+            return;
         }
         else {
             mail = json;
             updateMail();
         }
     });
+}
+
+function redirectToAccount() {
+    alert("Your sign in details are invalid - make sure you are signed in!");
+    window.location = "account.html";
 }
 
 function updateMail() {
@@ -56,7 +67,7 @@ function selectRow(index) {
     "<p>To: " + mail[index].to + "</p>" +
     "<p>From: " + mail[index].from + "</p>" +
     "<p>Subject: " + mail[index].subject + "</p>" +
-    mail[index].text;
+    "<div style=\"white-space: pre-wrap\">" + mail[index].text + "</div>";
 }
 
 getMail();
