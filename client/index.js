@@ -5,6 +5,10 @@ else {
     document.getElementById("signedinas").innerHTML = "Signed in as " + getCookie("auth").split(",")[0];
 }
 
+let aliases = [];
+
+getAliases();
+
 function getMail() {
 
     fetch("mail/inbox", {
@@ -48,10 +52,15 @@ function updateMail() {
         tdFrom.innerHTML = mail[i].from;
 
         let tdTo = document.createElement("td");
-        tdTo.innerHTML = mail[i].parsedTo;
+        if (aliases[mail[i].parsedTo] == "") {
+            tdTo.innerHTML = aliases[mail[i].parsedTo];
+        }
+        else {
+            tdTo.innerHTML = mail[i].parsedTo;
+        }
 
         let tdDate = document.createElement("td");
-        tdDate.innerHTML = "NYI";
+        tdDate.innerHTML = mail[i].date;
 
         tr.appendChild(tdSubject);
         tr.appendChild(tdFrom);

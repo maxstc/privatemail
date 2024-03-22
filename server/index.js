@@ -31,6 +31,7 @@ server.listen(3001);
 console.log("SMTP Mail server running on port 3001");
 
 function handleMail(text) {
+    console.log("got mail");
     let parsedMail = parseMail(text);
     if (db["alias"][parsedMail.parsedTo] === undefined) {
         console.log("Mail bounced!");
@@ -49,6 +50,9 @@ function parseMail(text) {
     let isText = false;
     for (let i = 0; i < split.length; i++) {
         if (isText) {
+            if (split[i].substring(split[i].length, split[i].length + 1) == "=") {
+                split[i] = split[i].substring(0, split[i].length);
+            }
             output.text += split[i] + "\n";
         }
         else if (split[i].trim() === "") {
@@ -61,6 +65,10 @@ function parseMail(text) {
     }
     output.text = output.text.substring(0, output.text.length - 1);
     output.parsedTo = output.to.substring(0, output.to.indexOf("@"));
+    if (output.parsedTo.includes("<")) {
+        output.parsedTo = output.parsedTo.substring(output.parsedTo.indexOf("<") + 1, output.parsedTo.length);
+    }
+    
     output.text = output.text.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
     return output;
 }
