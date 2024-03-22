@@ -49,15 +49,14 @@ function updateMail() {
         tdSubject.innerHTML = mail[i].subject;
 
         let tdFrom = document.createElement("td");
-        tdFrom.innerHTML = mail[i].from;
+        tdFrom.innerHTML = mail[i].from.html;
 
-        console.log(mail[i].parsedTo);
         let tdTo = document.createElement("td");
-        if (aliases[mail[i].parsedTo] != "") {
-            tdTo.innerHTML = aliases[mail[i].parsedTo];
+        if (aliases[mail[i].parsedToLocalPart] != "") {
+            tdTo.innerHTML = aliases[mail[i].parsedToLocalPart];
         }
         else {
-            tdTo.innerHTML = mail[i].parsedTo;
+            tdTo.innerHTML = mail[i].parsedToLocalPart;
         }
 
         let tdDate = document.createElement("td");
@@ -74,8 +73,8 @@ function updateMail() {
 
 function selectRow(index) {
     document.getElementsByTagName("div")[1].innerHTML = 
-    "<p>To: " + mail[index].to + "</p>" +
-    "<p>From: " + mail[index].from + "</p>" +
+    "<p>To: " + mail[index].to.text + "</p>" +
+    "<p>From: " + mail[index].from.html + "</p>" +
     "<p>Subject: " + mail[index].subject + "</p>" +
     "<div style=\"white-space: pre-wrap\">" + mail[index].text + "</div>";
 }
