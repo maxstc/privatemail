@@ -7,7 +7,7 @@ else {
 
 let aliases = [];
 
-getAliases();
+getAliases(()=>{});
 
 function getMail() {
 
@@ -51,8 +51,9 @@ function updateMail() {
         let tdFrom = document.createElement("td");
         tdFrom.innerHTML = mail[i].from;
 
+        console.log(mail[i].parsedTo);
         let tdTo = document.createElement("td");
-        if (aliases[mail[i].parsedTo] == "") {
+        if (aliases[mail[i].parsedTo] != "") {
             tdTo.innerHTML = aliases[mail[i].parsedTo];
         }
         else {

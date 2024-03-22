@@ -81,4 +81,4 @@ function createNewAlias() {
     });
 }
 
-getAliases();
+getAliases(updateAliases);

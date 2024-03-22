@@ -1,4 +1,4 @@
-function getAliases() {
+function getAliases(callback) {
     fetch("alias/get", {
         method: "POST",
         body: JSON.stringify({
@@ -17,7 +17,7 @@ function getAliases() {
         }
         else {
             aliases = json;
-            updateAliases();
+            callback();
         }
     });
 }
