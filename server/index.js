@@ -2,6 +2,29 @@ const stream = require("stream");
 const db = require("./fakedb.json");
 
 const SMTPServer = require("smtp-server").SMTPServer;
+const secureServer = new SMTPServer({
+    secure: true,
+    key: privateKey,
+    cert: certificate,
+    onData(str, session, callback) {
+        let ws = new stream;
+        ws.writeable = true;
+        ws.output = "";
+        ws.write = (chunk) => {
+            ws.output += chunk.toString();
+        };
+        ws.end = () => {
+            handleMail(ws.output);
+            console.log(ws.output);
+        }
+        str.pipe(ws);
+        str.on("end", callback);
+    }
+});
+server.listen(3002);
+console.log("Secure SMTP Mail server running on port 3002");
+
+const SMTPServer = require("smtp-server").SMTPServer;
 const server = new SMTPServer({
     authOptional: true,
     onData(str, session, callback) {
@@ -13,6 +36,7 @@ const server = new SMTPServer({
         };
         ws.end = () => {
             handleMail(ws.output);
+            console.log(ws.output);
         }
         str.pipe(ws);
         str.on("end", callback);
@@ -52,6 +76,7 @@ function parseMail(text) {
     }
     output.text = output.text.substring(0, output.text.length - 1);
     output.parsedTo = output.to.substring(0, output.to.indexOf("@"));
+    output.text = output.text.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
     return output;
 }
 
